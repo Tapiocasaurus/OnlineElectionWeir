@@ -8,8 +8,10 @@
 </head>
 <body>
 <form method = "post" action = "ElectionMasterControl">
+<font color="black" size=5>
 <br><div align="center"> Thank you for voting!</div><br/>
 <br><div align="center"><br/> <input type = "submit" name = "doThisToItem" value = "Cast Next Vote"></div>
 <br><div align="center"><br/> <input type = "submit" name = "doThisToItem" value = "Show Results"></div>
+</font>
 </body>
 </html>

@@ -20,8 +20,16 @@ import model.VotingDAO;
 @WebServlet("/ElectionMasterControl")
 public class ElectionMasterControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
+       public static String elecName;
+    public static String getElecName() {
+		return elecName;
+	}
+
+	public static void setElecName(String elecName) {
+		ElectionMasterControl.elecName = elecName;
+	}
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public ElectionMasterControl() {
@@ -44,6 +52,7 @@ public class ElectionMasterControl extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("Inside master controller servlet");
 		VotingDAO dao = new VotingDAO();
+		String selectName;
 		//getServletContext().getRequestDispatcher("/choose-election.jsp").forward(request, response);
 		String actionToPerform = request.getParameter("doThisToItem");
 		if(actionToPerform.equals("New Election")){
@@ -52,14 +61,22 @@ public class ElectionMasterControl extends HttpServlet {
 		}
 		else if(actionToPerform.equals("Choose Election")){
 			System.out.println("Launch us to vote in election");
+			int tempId = Integer.parseInt(request.getParameter("id"));
+			tempId = tempId + 1;
+			System.out.println(tempId);
+			selectName = dao.getElection(tempId);
+			request.setAttribute("ElectionName", selectName);
+			elecName = selectName;
 			getServletContext().getRequestDispatcher("/voting.jsp").forward(request, response);
 		}
 		else if(actionToPerform.equals("Cast Next Vote")){
 			System.out.println("Launch us to vote in election");
+			request.setAttribute("ElectionName", elecName);
 			getServletContext().getRequestDispatcher("/voting.jsp").forward(request, response);
 		}
 		else if(actionToPerform.equals("Show Results")){
 			System.out.println("Launch us to vote in election");
+			request.setAttribute("ElectionName", elecName);
 			getServletContext().getRequestDispatcher("/election-results.jsp").forward(request, response);
 		}
 		else if(actionToPerform.equals("OK")){

@@ -40,16 +40,18 @@ public class NewElectionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, NullPointerException {
 		String elecID = request.getParameter("eID");
-		String elecName = request.getParameter("ename");
+		String electName = request.getParameter("ename");
 		String cand1Name = request.getParameter("c1name");
 		String cand2Name = request.getParameter("c2name");
 		String cand3Name = request.getParameter("c3name");
-		VoteTally li = new VoteTally(elecName, cand1Name, cand2Name, cand3Name, 0,0,0);
+		VoteTally li = new VoteTally(electName, cand1Name, cand2Name, cand3Name, 0,0,0);
 		VotingDAO dao = new VotingDAO();
-		
+		int eID = Integer.parseInt(elecID);
+		dao.insertNewElection(li, eID);
 		String actionToPerform = request.getParameter("doThisToItem");
 		if(actionToPerform.equals("Submit Election")){
-			dao.insertNewElection(li);
+			request.setAttribute("ElectionName", electName);
+			ElectionMasterControl.setElecName(electName);
 			System.out.println("Launch us to vote");
 			getServletContext().getRequestDispatcher("/voting.jsp").forward(request, response);
 		}

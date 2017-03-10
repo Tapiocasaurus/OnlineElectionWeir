@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.VotingDAO;
+
 /**
  * Servlet implementation class VotingServlet
  */
@@ -37,16 +39,31 @@ public class VotingServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		VotingDAO dao = new VotingDAO();
+		String eN = ElectionMasterControl.getElecName();
 		String actionToPerform = request.getParameter("doThisToItem");
-		if(actionToPerform.equals("cand1")){
-			System.out.println("Launch us to vote");
+		if(actionToPerform.equals("1")){
+			System.out.println("Launch us to vote for 1");
+			int vote1= dao.getVote(1, eN);
+			System.out.println(vote1);
+			vote1 += 1;
+			System.out.println(vote1);
+			dao.updateElection(1,vote1,eN);
 			getServletContext().getRequestDispatcher("/thankyou.jsp").forward(request, response);
+			
 		}
-		else if (actionToPerform.equals("cand2")){
-			System.out.println("Launch us to vote");
+		else if (actionToPerform.equals("2")){
+			int vote2= dao.getVote(2, eN);
+			vote2 += 1;
+			dao.updateElection(2,vote2,eN);
+			System.out.println("Launch us to vote for 2");
 			getServletContext().getRequestDispatcher("/thankyou.jsp").forward(request, response);
-		} 	else if (actionToPerform.equals("cand3")){
-			System.out.println("Launch us to vote");
+			
+		} 	else if (actionToPerform.equals("3")){
+			System.out.println("Launch us to vote for 3");
+			int vote3= dao.getVote(3, eN);
+			vote3 += 1;
+			dao.updateElection(3,vote3,eN);
 			getServletContext().getRequestDispatcher("/thankyou.jsp").forward(request, response);
 		}
 		doGet(request, response);

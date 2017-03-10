@@ -1,6 +1,8 @@
 package controller;
 
 
+
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.VoteTally;
 import model.VotingDAO;
+import model.VotingMachine; 
 
 /**
  * Servlet implementation class ChooseElectionServlet
@@ -26,6 +29,7 @@ public class ChooseElectionServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -33,9 +37,9 @@ public class ChooseElectionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		VotingDAO dao = new VotingDAO();
-		//System.out.println(dao.getAllItems());
-		//request.setAttribute("AllItems", dao.getAllItems());
-		
+		//dao.makeConnection();
+		System.out.println(dao.getAllItems());
+		request.setAttribute("AllItems", dao.getAllItems());
 		getServletContext().getRequestDispatcher("/choose-election.jsp").forward(request, response);
 		System.out.println("Leaving choose election");
 		//response.getWriter().append("Served at: ").append(request.getContextPath());

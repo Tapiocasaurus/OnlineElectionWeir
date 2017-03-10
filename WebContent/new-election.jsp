@@ -8,12 +8,13 @@
 </head>
 <body>
 <form action = "NewElectionServlet" method = "post">
-<br><div align="center">ElectionID: <br/> <input type = "text" name = "eID" value = " "></div>
-<br><div align="center">ElectionName:<br/> <input type = "text" name = "ename" value = " " ></div>
-<br><div align="center">Candidate1Name:<br/>  <input type = "text" name = "c1name" value = " "></div>
-<br><div align="center">Candidate2Name:<br/>  <input type = "text" name = "c2name" value = " "></div>
-<br><div align="center">Candidate3Name:<br/>  <input type = "text" name = "c3name" value = " "></div>
-
+<font color="black" size=5>
+<br><div align="center">ElectionID: <br/> <input type = "text" name = "eID" value = ""></div>
+<br><div align="center">ElectionName:<br/> <input type = "text" name = "ename" value = "" ></div>
+<br><div align="center">Candidate1Name:<br/>  <input type = "text" name = "c1name" value = ""></div>
+<br><div align="center">Candidate2Name:<br/>  <input type = "text" name = "c2name" value = ""></div>
+<br><div align="center">Candidate3Name:<br/>  <input type = "text" name = "c3name" value = ""></div>
+</font>
 
 
 <br><div align="center"><br/> <input type = "submit" name ="doThisToItem" value = "Submit Election"></div>

@@ -546,7 +546,8 @@ public class VotingMachine extends JFrame{
 				System.out.println(tempItem.getElectionName());
 				//System.out.println(tempItem.getCandidates()[0]);
 				//dao
-				tally = dao.selectElect(tempItem.getElectionName());
+				
+				//tally = dao.selectElect(tempItem.getID());
 				
 				//tally.setCandidates(tempItem.getCandidates());
 				//dao.selectElect(index);

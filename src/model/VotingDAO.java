@@ -1,4 +1,5 @@
 package model;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ Connection con = null;
 		String password = "DIAD2016";
 		
 		try{
-			
+			Class.forName("com.mysql.jdbc.Driver");
 			
 			con = DriverManager.getConnection(url,user,password);
 			System.out.println("Connection made");
@@ -64,36 +65,37 @@ Connection con = null;
 	}
 	
 	
-	//public ArrayList<VoteTally> getElections(){
+	public String getElection(int Eid){
 		//ArrayList<VoteTally> Elections = new ArrayList<VoteTally>();
-		//String q = "SELECT electionName from currentelections";
-		//try{
-		//Statement st = (Statement) con.createStatement();
-		//ResultSet rs = st.executeQuery(q);
+		String election = null;
+		String q = "SELECT electionName from currentelections where electionID = '" + Eid +"'";
+		try{
+		Statement st = (Statement) con.createStatement();
+		ResultSet rs = st.executeQuery(q);
 		
-		//while(rs.next()){
+		while(rs.next()){
 			
-			//String id = rs.getString(1);
+			election = rs.getString(1);
 			
 			//ListItem tempItem = new ListItem(store,item);
 			//allItems.add(tempItem);
 			
 			//System.out.println(id + "--" + store + "--" + item);
-		//}
-		//} catch (SQLException ex){
-			//System.out.println("Sql error in get all items");
-			//System.out.println(ex.getStackTrace());
-		//}
+		}
+		} catch (SQLException ex){
+			System.out.println("Sql error in get all items");
+			System.out.println(ex.getStackTrace());
+		}
 		
-	//	return allItems;
-	//}
-	public VoteTally selectElect(String index) {
+		return election;
+	}
+	public VoteTally selectElect(int index) {
 		// TODO Auto-generated method stub
 		makeConnection();
 		
 		//int tempID = i.getID();
 
-		String query = "select * from currentelections where electionName ='" + index + "'";
+		String query = "select * from currentelections where electionID ='" + index + "'";
 		System.out.println(query);
 		VoteTally electionSelect = null;
 		try {
@@ -122,14 +124,74 @@ Connection con = null;
 		return electionSelect;
 
 	}
-	
-
-	public VoteTally insertNewElection(VoteTally i) {
+	public String getName(int select,  String index) {
 		// TODO Auto-generated method stub
 		makeConnection();
-		String tempID = VotingMachine.newElectionID;
-		String tempElection = VotingMachine.newElectionName;
-		String [] tempCandidates = {VotingMachine.newcand1,VotingMachine.newcand2,VotingMachine.newcand3};
+		
+		//int tempID = i.getID();
+
+		String query = "select candidate" + select + "name from currentelections where electionName ='" + index + "'";
+		System.out.println(query);
+		String electionidb=null;
+		try {
+			Statement st = (Statement) con.createStatement();
+			//st.executeQuery(query);
+			ResultSet rs2 = st.executeQuery(query);
+			while(rs2.next()){
+				
+				electionidb = rs2.getString(1);
+
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(electionidb);
+		return electionidb;
+
+	}	
+	public int getVote(int select,  String index) {
+		// TODO Auto-generated method stub
+		makeConnection();
+		
+		//int tempID = i.getID();
+
+		String query = "select cand" + select + "vote from currentelections where electionName ='" + index + "'";
+		System.out.println(query);
+		int electionidb=0;
+		try {
+			Statement st = (Statement) con.createStatement();
+			//st.executeQuery(query);
+			ResultSet rs2 = st.executeQuery(query);
+			while(rs2.next()){
+				
+				electionidb = rs2.getInt(1);
+
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(electionidb);
+		return electionidb;
+
+	}
+	
+
+	//public  ArrayList getElectionNames(){
+		
+//	}
+	
+	public VoteTally insertNewElection(VoteTally i, int elecID) {
+		// TODO Auto-generated method stub
+		makeConnection();
+		int tempID = elecID;
+		String tempElection = i.getElectionName();
+		String [] tempCandidates = {i.getCandidates()[0],i.getCandidates()[1],i.getCandidates()[2]};
 		int []tempTallies = {0,0,0};
 		
 		String query = "INSERT INTO currentelections (electionID, electionName, candidate1name, candidate2name, candidate3name, cand1vote, cand2vote, cand3vote) "
@@ -156,7 +218,7 @@ Connection con = null;
 	public void updateElection(int select, int newTally, String index) {
 		// TODO Auto-generated method stub
 		makeConnection();
-		select += 1;
+		
 		
 		String query = "UPDATE currentelections SET cand"+ select + "vote="+ newTally + 
 " WHERE electionName = '"+ index + "'";
